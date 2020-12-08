@@ -533,15 +533,6 @@ int rs232_open(int *dev_fd, char *dev_file)
   curr_serial_port_settings.c_cflag |= (PARENB | PARODD | CS8 );  // 8 bit, odd parity
   curr_serial_port_settings.c_cflag &= ~(CRTSCTS);
 
- // curr_serial_port_settings.c_cflag = 0xbbe; //important
-  //curr_serial_port_settings.c_iflag = 0x11;
-  //curr_serial_port_settings.c_oflag = 0x4;
-  //curr_serial_port_settings.c_lflag = 0xab0;
-  //curr_serial_port_settings.c_cc[5] = 0x0; // important
-  //curr_serial_port_settings.c_cc[6] = 0x0; // important
-
-  //curr_serial_port_settings.c_cc[VMIN] = 1; // Read at least 255 characters
-  //curr_serial_port_settings.c_cc[VTIME] = 100; // Wait indefinetly
   curr_serial_port_settings.c_cc[VMIN]  = 0;
   curr_serial_port_settings.c_cc[VTIME] = 0;
 
@@ -559,15 +550,6 @@ int rs232_open(int *dev_fd, char *dev_file)
     fprintf(stderr, "**Error**: rs232_open: Unable to flush terminal (%s)\n", strerror(errno));
     return -6;
   }
-
-  print_dump((char *)&curr_serial_port_settings, sizeof(curr_serial_port_settings));
-  printf("c_cflag = %x\n", curr_serial_port_settings.c_cflag);
-  printf("size of tcflag_t =  %i \n", sizeof(tcflag_t));
-  printf("size of cc_t     =  %i \n", sizeof(cc_t));
-  printf("size of cc_c     =  %i \n", sizeof(curr_serial_port_settings.c_cc));
-  printf("size of termios  =  %i \n", sizeof(struct termios));
-  printf("c_cflag = %x\n", curr_serial_port_settings.c_cflag);
-  printf("CS8 = %x\n", CS8);
 
   return 0;
 }
